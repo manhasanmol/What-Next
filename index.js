@@ -1,28 +1,49 @@
+window.addEventListener("load",() => {
+  loadTasks();
+});
+
 function addItem(){
-  var itemList = document.getElementById("myList");
   var newItemText = document.getElementById("newItemText").value;
   var newItemTime = document.getElementById("newItemTime").value;
 
+  var item = {text: newItemText,time:newItemTime};
+  saveTask(item);
 
 
-  var newItem = document.createElement("li");
-  var itemText = document.createElement("span");
+  document.getElementById("newItemText").value = '';
+  document.getElementById("newItemTime").value = '';
+  loadTasks();
+}
 
-  itemText.textContent = newItemText + " at " +newItemTime + " ";
+function saveTask(item){
+  var tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  tasks.push(item);
+  localStorage.setItem("tasks", JSON.stringify(tasks));
 
+}
 
-  var rmButton = document.createElement("button");
-  rmButton.textContent = "X";
-  rmButton.onclick = function () {
-    itemList.removeChild(newItem);
-  };
+function loadTasks(){
+  var itemList = document.getElementById("myList");
+  itemList.innerHTML = '';
 
+  var tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  tasks.forEach((task, index) => {
+    var newItem = document.createElement("li");
+    var itemText = document.createElement("span");
+    itemText.textContent = task.text + " at " +task.time + " ";
+
+    var rmButton = document.createElement("button");
+    rmButton.textContent = "X";
+    rmButton.onclick = function(){
+      tasks.splice(index, 1);
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+      loadTasks();
+    };
+    
   newItem.appendChild(itemText);
   newItem.appendChild(rmButton);
 
   itemList.appendChild(newItem);
-
-  document.getElementById("newItemText").value = '';
-  document.getElementById("newItemTime").value = '';
+  });
 }
 
