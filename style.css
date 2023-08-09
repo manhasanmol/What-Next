@@ -1,0 +1,32 @@
+.center {
+    text-align: center;
+}
+
+h1{
+    color: rgb(45, 177, 213);
+    border: solid white 1px;
+}
+h1:hover{
+    color: black;
+    background-color: white;
+}
+
+
+p,li{
+    color: rgb(209, 201, 201);
+}
+p:hover,li:hover {
+    color: aqua;
+}
+
+ul{
+    margin:3rem 0 0 36rem;
+}
+button:hover{
+    background-color: red;
+    color: white;
+
+}
+
+
+
